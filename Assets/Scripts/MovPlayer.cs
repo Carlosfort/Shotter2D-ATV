@@ -24,7 +24,7 @@ public class MovPlayer : MonoBehaviour
     void Update()
     {
         PlayerInput();
-        FlipX();
+        AdjustPlayerFacingDirection();
     }
     void FixedUpdate()
     {
@@ -40,9 +40,18 @@ public class MovPlayer : MonoBehaviour
     {
         rb.MovePosition(rb.position + movement * (Speed *Time.fixedDeltaTime));
     }
-    private void FlipX()
+    private void AdjustPlayerFacingDirection()
     {
-        if(movement.x > 0 ){sprite.flipX = false;}
-        else if(movement.x < 0 ){sprite.flipX = true;}
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
+
+        if(mousePos.x < playerScreenPoint.x)
+        {
+            sprite.flipX = true;
+        }
+        else
+        {
+            sprite.flipX = false;
+        }
     }
 }
